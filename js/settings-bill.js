@@ -24,8 +24,9 @@ var criticalLevelSettingX = 0;
 function updateSetting(){
     callCostSettingX = Number(callCostSettingElem.value);
     smsCostSettingX = Number(smsCostSettingElem.value);
-    warningLevelSettingx = Number(warningLevelSettingElem.value);
-    criticalLevelSettingX = Number(criticalLevelSettingElem.value);
+    warningLevelSettingX = (warningLevelSettingElem.value);
+    criticalLevelSettingX = (criticalLevelSettingElem.value);
+   colorBehaviour();
 
 }
 
@@ -35,34 +36,46 @@ updateSettingsElem.addEventListener("click", updateSetting);
 function billSettingTotal(){
    
     var billItemTypeWithSettingsElem = document.querySelector("input[name='billItemTypeWithSettings']:checked");
-    if (billItemTypeWithSettingsElem ){
-    if(totalSettingsX < criticalLevelSettingX){
-        if (billItemTypeWithSettingsElem.value === "call"){
+    if (billItemTypeWithSettingsElem){
+        if(totalSettingsX < criticalLevelSettingX){
+        var checkBtn = billItemTypeWithSettingsElem.value;
+        if (checkBtn === 'call'){
             callTotalSettingsX += callCostSettingX;
-            totalSettingsX += callCostSettingX;
-        }
-        else if (billItemTypeWithSettingsElem.value === "sms"){
+        }else if (checkBtn === 'sms'){
             smsTotalSettingsX += smsCostSettingX;
-            totalSettingsX += smsCostSettingX;
         }
-
     }
-       
 }
-    
-    //update the totals that is displayed on the screen.
     callTotalSettingsElem.innerHTML = callTotalSettingsX.toFixed(2);
     smsTotalSettingsElem.innerHTML = smsTotalSettingsX.toFixed(2);
-    //var totalCost = callsTotal + smsTotal;
+    totalSettingsX = callTotalSettingsX + smsTotalSettingsX;
     totalSettingsElem.innerHTML = totalSettingsX.toFixed(2);
 
+    colorBehaviour();
+};
 
-    //behaviour setting
-    if(totalSettingsX >= criticalLevelSettingX ){
-        totalSettingsElem.classList.add("danger");
-    }else if (totalSettingsX >= warningLevelSettingx) {
-        totalSettingsElem.classList.add("warning");
+function colorBehaviour(){
+
+
+
+    if (totalSettingsX >= criticalLevelSettingX) {
+        //make the total to be in red
+        totalSettingsElem.classList.remove("warning")
+
+        totalSettingsElem.classList.add("danger")
+    } else if (totalSettingsX >= warningLevelSettingX && totalSettingsX < criticalLevelSettingX){
+        //make the total to be in orange
+        totalSettingsElem.classList.remove("danger")
+
+        totalSettingsElem.classList.add("warning")
+
     }
+    else {
+        totalSettingsElem.classList.remove("danger")
+        totalSettingsElem.classList.remove("warning")
+    }
+   
+     
 }
 
 primaryElem.addEventListener("click", billSettingTotal);

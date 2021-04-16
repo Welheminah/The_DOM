@@ -9,8 +9,8 @@ var radioBillAddBtnElem = document.querySelector(".radioBillAddBtn");
 
 
 //create a variable that will keep track of the total bill
-var callTotal = 0;
-var smsTotal = 0;
+var callsTotals = 0;
+var smsTotals = 0;
 //add an event listener for when the add button is pressed
 
 //in the event listener get the value from the billItemTypeRadio radio buttons
@@ -28,26 +28,26 @@ function textBillTotal(){
 
     // update the correct total
     if (checkedRadioBtnElem.value === "call"){
-        callsTotal += 2.75;
+        callsTotals += 2.75;
     }
     else if (checkedRadioBtnElem.value === "sms"){
-        smsTotal += 0.75;
+        smsTotals += 0.75;
     }
     
 }
 
     
     //update the totals that is displayed on the screen.
-    callTotalTwoElem.innerHTML = callsTotal.toFixed(2);
-    smsTotalTwoElem.innerHTML = smsTotal.toFixed(2);
-    var totalCost = callsTotal + smsTotal;
-    totalTwoElem.innerHTML = totalCost.toFixed(2);
+    callTotalTwoElem.innerHTML = callsTotals.toFixed(2);
+    smsTotalTwoElem.innerHTML = smsTotals.toFixed(2);
+    var totalCosts = callsTotals + smsTotals;
+    totalTwoElem.innerHTML = totalCosts.toFixed(2);
 
-    if (totalCost > 50){
+    if (totalCosts > 50){
         // adding the danger class will make the text red
         totalTwoElem.classList.add("danger");
     }
-    else if (totalCost >= 30 && totalCost < 50){
+    else if (totalCosts >= 30 && totalCosts < 50){
         totalTwoElem.classList.add("warning");
     }
 
